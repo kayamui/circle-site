@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Halka: büyük spor organizasyonları için sağlık hizmetlerini tek zincirde birleştiren yazılım platformu.">
+<meta name="robots" content="noindex">
+<title>Circle Oyun Sağlığı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#041433; --deep:#072a73; --cobalt:#0a4bd6; --sky:#4ea1ff; --ice:#eef4ff; --ink:#0b1b3d; --mute:#5a6b8c; --line:#d9e4f7; --white:#fff;
+  --f:"Hanken Grotesk","Segoe UI",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--ink);font:400 1.0625rem/1.65 var(--f);overflow-x:hidden}
+a{color:inherit}
+h1,h2,h3{font-weight:300;letter-spacing:-.02em;line-height:1.08;text-wrap:balance}
+.pad{padding-inline:clamp(20px,5vw,72px)}
+.wrap{max-width:1180px;margin-inline:auto}
+:focus-visible{outline:3px solid var(--sky);outline-offset:3px;border-radius:4px}
+
+/* nav */
+header{position:fixed;inset:0 0 auto 0;z-index:30;transition:background .35s,box-shadow .35s;padding-top:env(safe-area-inset-top,0px)}
+header.solid{background:rgba(4,20,51,.92);backdrop-filter:blur(10px)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;height:4.4rem}
+.brand{display:flex;align-items:center;gap:.7rem;color:#fff;text-decoration:none;font-weight:600;font-size:1.25rem;letter-spacing:.01em}
+.brand svg{width:1.7rem;height:1.7rem}
+nav{display:flex;gap:2rem;font-size:.95rem;font-weight:500}
+nav a{color:#ffffffcc;text-decoration:none}nav a:hover{color:#fff}
+.pill{color:var(--navy);background:#fff;text-decoration:none;font-weight:600;font-size:.92rem;padding:.55rem 1.15rem;border-radius:999px;transition:.2s}
+.pill:hover{background:var(--sky);color:#fff}
+@media(max-width:820px){nav{display:none}}
+
+/* hero slider */
+.hero{position:relative;height:100vh;height:100svh;min-height:600px;background:var(--navy);color:#fff;overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity 1s ease,visibility 0s 1s;background:var(--bg)}
+.slide.on{opacity:1;visibility:visible;transition:opacity 1s ease}
+.slide .fig{position:absolute;right:clamp(0px,5vw,90px);bottom:6vh;height:min(78%,760px);aspect-ratio:1;transform:translateX(90px);opacity:0;transition:transform 1.6s cubic-bezier(.2,.7,.2,1),opacity 1s}
+.slide.on .fig{transform:none;opacity:1}
+.slide .fig svg{width:100%;height:100%;overflow:visible}
+.deco{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.streak{position:absolute;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#ffffff77);animation:st linear infinite}
+@keyframes st{from{transform:translateX(30vw)}to{transform:translateX(-130vw)}}
+.ring{position:absolute;border:1.5px solid #ffffff22;border-radius:50%;right:calc(5vw + 6vh);top:50%;translate:0 -50%;animation:rot 40s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.wave{position:absolute;left:0;width:200%;bottom:0;height:42%;opacity:.25;animation:wv 14s linear infinite}
+@keyframes wv{to{transform:translateX(-50%)}}
+.glow{position:absolute;border-radius:50%;filter:blur(80px);opacity:.55}
+
+.cap{position:absolute;left:clamp(20px,5vw,72px);bottom:clamp(88px,13vh,130px);max-width:30rem;z-index:5}
+.cap small{display:block;font-size:.85rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--sky);margin-bottom:.8rem}
+.cap h2{font-size:clamp(1.8rem,3.6vw,2.9rem);font-weight:400}
+.cap p{margin-top:.8rem;color:#ffffffc4;font-size:1.05rem}
+.slide .cap>*{opacity:0;transform:translateY(16px);transition:.9s .35s}
+.slide.on .cap>*{opacity:1;transform:none}
+.slide.on .cap h2{transition-delay:.45s}.slide.on .cap p{transition-delay:.55s}
+
+.lead{position:absolute;left:clamp(20px,5vw,72px);top:clamp(6.2rem,17vh,9rem);z-index:6;max-width:46rem;pointer-events:none}
+.lead h1{font-size:clamp(2.1rem,5.2vw,4.6rem);font-weight:300;color:#fff}
+.lead h1 b{font-weight:600}
+.ctrl{position:absolute;z-index:7;left:clamp(20px,5vw,72px);right:clamp(20px,5vw,72px);bottom:clamp(20px,4.5vh,40px);display:flex;align-items:center;gap:1.2rem}
+.tick{flex:1;display:flex;gap:.6rem}
+.tick button{flex:1;max-width:5.5rem;height:1.6rem;background:none;border:0;cursor:pointer;display:flex;align-items:center;padding:0}
+.tick button i{display:block;width:100%;height:3px;background:#ffffff40;border-radius:3px;overflow:hidden}
+.tick button i::after{content:"";display:block;height:100%;width:0;background:#fff}
+.tick button.on i::after{animation:fill var(--d,7s) linear forwards}
+.tick button.done i::after{width:100%}
+.paused .tick button.on i::after{animation-play-state:paused}
+@keyframes fill{to{width:100%}}
+.arrows{display:flex;gap:.5rem}
+.arrows button{width:2.8rem;height:2.8rem;border-radius:50%;border:1px solid #ffffff55;background:#ffffff10;color:#fff;cursor:pointer;font-size:1.1rem;display:grid;place-items:center;transition:.2s}
+.arrows button:hover{background:#fff;color:var(--navy)}
+.scroll{position:absolute;right:clamp(20px,5vw,72px);bottom:clamp(76px,12vh,110px);z-index:7;writing-mode:vertical-rl;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:#ffffffa0;text-decoration:none}
+@media(max-width:820px){
+  .slide .fig{right:50%;translate:50% 0;height:42%;bottom:auto;top:38%}
+  .lead{top:5.4rem}.lead h1{font-size:clamp(1.9rem,8.2vw,2.8rem)}
+  .cap{bottom:5.2rem;max-width:none;right:20px}
+  .cap p{font-size:.98rem}
+  .scroll{display:none}.arrows{display:none}
+}
+
+/* intro */
+.intro{padding-block:clamp(4rem,10vw,8rem)}
+.intro p{font-size:clamp(1.5rem,3.2vw,2.5rem);font-weight:300;line-height:1.3;max-width:26em;letter-spacing:-.01em}
+.intro p em{font-style:normal;color:var(--cobalt);font-weight:500}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3.5rem;border-top:1px solid var(--line);padding-top:2rem}
+.facts strong{display:block;font-size:clamp(2.4rem,5vw,3.6rem);font-weight:300;letter-spacing:-.03em;color:var(--cobalt);font-variant-numeric:tabular-nums;line-height:1}
+.facts span{display:block;margin-top:.5rem;color:var(--mute);font-size:.95rem}
+@media(max-width:700px){.facts{grid-template-columns:repeat(2,1fr)}}
+
+/* platform */
+.plat{background:var(--navy);color:#fff;padding-block:clamp(4rem,9vw,7rem);position:relative;overflow:hidden}
+.plat::before{content:"";position:absolute;width:60vw;height:60vw;right:-20vw;top:-25vw;background:radial-gradient(closest-side,#0a4bd655,transparent);}
+.plat h2{font-size:clamp(2rem,4.6vw,3.6rem);max-width:15em;position:relative}
+.plat .sub{color:#ffffffb0;max-width:34em;margin-top:1.1rem;position:relative}
+.tabs{display:flex;gap:.4rem;margin-top:2.4rem;position:relative;flex-wrap:wrap}
+.tabs button{font:500 .95rem var(--f);color:#ffffffb8;background:none;border:1px solid #ffffff2a;border-radius:999px;padding:.55rem 1.2rem;cursor:pointer;transition:.2s}
+.tabs button:hover{color:#fff}
+.tabs button[aria-selected=true]{background:#fff;color:var(--navy);border-color:#fff}
+.win{margin-top:1.6rem;border-radius:16px;background:#0a1f4a;border:1px solid #ffffff1c;box-shadow:0 40px 80px -30px #000a;overflow:hidden;position:relative}
+.wbar{display:flex;align-items:center;gap:.5rem;padding:.8rem 1rem;border-bottom:1px solid #ffffff14;font-size:.82rem;color:#ffffff90}
+.wbar i{width:.65rem;height:.65rem;border-radius:50%;background:#ffffff30;display:block}
+.wbar span{margin-left:.8rem}
+.wbody{display:grid;grid-template-columns:11rem 1fr;min-height:23rem}
+.side{border-right:1px solid #ffffff14;padding:1rem .8rem;display:grid;align-content:start;gap:.2rem;font-size:.9rem;color:#ffffff90}
+.side div{padding:.5rem .7rem;border-radius:8px}
+.side .a{background:#ffffff14;color:#fff}
+.main{padding:1.3rem;min-width:0}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.kpi{background:#ffffff0d;border-radius:10px;padding:.8rem 1rem}
+.kpi b{display:block;font-size:1.7rem;font-weight:300;font-variant-numeric:tabular-nums}
+.kpi span{font-size:.8rem;color:#ffffff90}
+.two{display:grid;grid-template-columns:1.3fr 1fr;gap:1.2rem;margin-top:1.1rem}
+.row{display:grid;grid-template-columns:1fr auto;gap:.6rem;padding:.65rem 0;border-bottom:1px solid #ffffff12;font-size:.92rem;align-items:center}
+.row small{display:block;color:#ffffff80;font-size:.78rem}
+.tag{font-size:.74rem;font-weight:600;padding:.18rem .6rem;border-radius:999px;background:#4ea1ff2a;color:#9cc9ff;white-space:nowrap}
+.tag.ok{background:#3ddc8a24;color:#7be9b0}.tag.wait{background:#ffffff1c;color:#fff}
+.bars div{margin-bottom:.9rem;font-size:.88rem}
+.bars em{display:block;height:6px;border-radius:6px;background:#ffffff1a;margin-top:.35rem;overflow:hidden;font-style:normal}
+.bars em::after{content:"";display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--cobalt),var(--sky));border-radius:6px;transition:width 1s}
+.chain{display:grid;grid-template-columns:repeat(5,1fr);gap:.7rem;margin-top:1.2rem}
+.node{background:#ffffff0d;border-radius:10px;padding:.9rem .8rem;font-size:.85rem;position:relative;border:1px solid transparent}
+.node b{display:block;font-weight:600;margin-bottom:.2rem}
+.node time{color:#ffffff80;font-size:.78rem}
+.node.ok{border-color:#3ddc8a55}.node.cur{border-color:var(--sky);animation:bl 1.6s infinite}
+@keyframes bl{50%{background:#4ea1ff22}}
+.prog{height:8px;border-radius:8px;background:#ffffff1a;margin-top:1.2rem;overflow:hidden}
+.prog i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--cobalt),var(--sky));transition:width 1.2s}
+.chk{display:grid;gap:.1rem;margin-top:.8rem}
+.chk div{display:flex;gap:.7rem;padding:.5rem 0;font-size:.92rem;border-bottom:1px solid #ffffff12}
+.chk b{width:1.15rem;height:1.15rem;border-radius:50%;border:1.5px solid #ffffff55;flex:none;margin-top:.15rem;display:grid;place-items:center;font-size:.7rem}
+.chk .d b{background:#3ddc8a;border-color:#3ddc8a;color:var(--navy)}
+@media(max-width:760px){.wbody{grid-template-columns:1fr}.side{display:none}.two{grid-template-columns:1fr}.chain{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:1fr 1fr 1fr}.kpi b{font-size:1.3rem}}
+
+/* capabilities */
+.cap-s{padding-block:clamp(4rem,9vw,7rem)}
+.cap-s h2{font-size:clamp(2rem,4.2vw,3.2rem);max-width:14em}
+.list{display:grid;grid-template-columns:1fr 1fr;column-gap:4rem;margin-top:3rem}
+.list div{display:grid;grid-template-columns:3rem 1fr;gap:.2rem 1rem;padding:1.4rem 0;border-top:1px solid var(--line);min-width:0}
+.list svg{width:2rem;height:2rem;color:var(--cobalt);grid-row:span 2}
+.list h3{font-size:1.25rem;font-weight:500;letter-spacing:-.01em}
+.list p{color:var(--mute);font-size:.98rem}
+@media(max-width:760px){.list{grid-template-columns:1fr}}
+
+/* path */
+.path{background:var(--ice);padding-block:clamp(3.5rem,8vw,6rem)}
+.path h2{font-size:clamp(1.9rem,4vw,3rem)}
+.rail{margin-top:3rem;display:grid;grid-template-columns:repeat(5,1fr);gap:1.2rem;position:relative}
+.rail::before{content:"";position:absolute;left:0;right:0;top:.45rem;height:2px;background:var(--line)}
+.rail div{position:relative;padding-top:1.8rem;min-width:0}
+.rail div::before{content:"";position:absolute;left:0;top:0;width:.9rem;height:.9rem;border-radius:50%;background:var(--cobalt);box-shadow:0 0 0 5px var(--ice)}
+.rail div:last-child::before{background:var(--sky)}
+.rail b{display:block;font-weight:600}
+.rail span{color:var(--mute);font-size:.95rem;display:block;margin-top:.2rem}
+@media(max-width:860px){.rail{grid-template-columns:1fr;gap:1.6rem}.rail::before{left:.43rem;right:auto;width:2px;top:0;bottom:0;height:auto}.rail div{padding:0 0 0 2rem}.rail div::before{top:.35rem}}
+
+/* contact */
+.contact{margin-block:clamp(3rem,7vw,6rem)}
+.cbox{background:linear-gradient(120deg,var(--deep),var(--cobalt));color:#fff;border-radius:28px;padding:clamp(2rem,6vw,5rem);position:relative;overflow:hidden}
+.cbox::after{content:"";position:absolute;width:30rem;height:30rem;right:-8rem;bottom:-14rem;border-radius:50%;border:1.5px solid #ffffff2e;box-shadow:0 0 0 3rem #ffffff08,0 0 0 6rem #ffffff06}
+.cbox h2{font-size:clamp(2rem,4.4vw,3.4rem);max-width:12em}
+.cbox p{margin-top:1rem;max-width:32em;color:#ffffffcc;position:relative}
+.cbox .r{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem;position:relative;align-items:center}
+.mail{border:1px dashed #ffffff80;border-radius:999px;padding:.7rem 1.3rem;font-weight:500}
+footer{padding-block:2rem 3rem;color:var(--mute);font-size:.88rem;border-top:1px solid var(--line)}
+footer p+p{margin-top:.5rem;max-width:56em}
+
+.ecg{position:absolute;left:0;right:0;top:43%;height:140px;z-index:2;pointer-events:none}
+.ecg svg,.ecgd svg{width:100%;height:100%;display:block;overflow:visible}
+.ecg path,.ecgd path{fill:none;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
+.ecg .base{stroke:#ffffff2e;stroke-width:2}
+.ecg .pulse{stroke:#8fd6ff;stroke-width:3.5;stroke-dasharray:.1 1;animation:ecg 3.8s linear infinite;filter:drop-shadow(0 0 7px #4ea1ff)}
+@keyframes ecg{from{stroke-dashoffset:.1}to{stroke-dashoffset:-1}}
+.ecgd{height:56px;margin-top:3rem}
+.ecgd .base{stroke:var(--line);stroke-width:2}
+.ecgd .pulse{stroke:var(--cobalt);stroke-width:3;stroke-dasharray:.08 1;animation:ecg 4.5s linear infinite}
+.plus{position:absolute;width:var(--s);height:var(--s);opacity:.16;animation:fl 9s ease-in-out infinite alternate}
+.plus::before,.plus::after{content:"";position:absolute;background:#fff;border-radius:2px}
+.plus::before{left:34%;right:34%;top:0;bottom:0}.plus::after{top:34%;bottom:34%;left:0;right:0}
+@keyframes fl{from{transform:translateY(24px)}to{transform:translateY(-110px)}}
+.vit{position:absolute;right:clamp(20px,5vw,72px);top:6.2rem;z-index:6;display:flex;align-items:center;gap:1.1rem;padding:.8rem 1.1rem;border-radius:16px;background:#ffffff14;border:1px solid #ffffff30;backdrop-filter:blur(10px);opacity:0;transform:translateY(-10px);transition:.9s .6s}
+.slide.on .vit{opacity:1;transform:none}
+.vit svg{width:2rem;height:2rem;color:#ff6b81;animation:hb 1s ease-in-out infinite;flex:none}
+@keyframes hb{0%,100%{transform:scale(1)}15%{transform:scale(1.22)}30%{transform:scale(1)}45%{transform:scale(1.14)}}
+.vit div{line-height:1.1}.vit b{font-size:1.5rem;font-weight:500;font-variant-numeric:tabular-nums;display:block}
+.vit small{font-size:.72rem;color:#ffffffa8;letter-spacing:.06em}
+.vit em{font-style:normal;font-size:.7rem;font-weight:600;color:#7be9b0;letter-spacing:.1em;text-transform:uppercase;margin-left:.2rem}
+@media(max-width:820px){.vit{top:auto;bottom:auto;right:20px;top:calc(50% - 1rem);padding:.5rem .8rem;gap:.7rem}.vit b{font-size:1.15rem}.vit svg{width:1.5rem;height:1.5rem}.ecg{top:36%}}
+.lang{display:flex;border:1px solid #ffffff55;border-radius:999px;padding:2px}
+.lang button{font:600 .8rem var(--f);letter-spacing:.06em;color:#ffffffb8;background:none;border:0;border-radius:999px;padding:.32rem .7rem;cursor:pointer}
+.lang button[aria-pressed=true]{background:#fff;color:var(--navy)}
+.rt{display:flex;align-items:center;gap:.8rem}
+@media(max-width:820px){.rt .pill{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header id="hd"><div class="bar pad">
+  <a class="brand" href="#top" aria-label="Circle"><svg viewBox="0 0 32 32" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="13" stroke="#fff" stroke-width="2.2"/><path d="M16 6.8v18.4" stroke="#fff" stroke-width="2"/><path d="M16 22.6c-5-1.4-5-4.8 0-6.2s5-4.800 0-5.600" stroke="#4ea1ff" stroke-width="2.4"/><circle cx="18.600" cy="8.200" r="1.700" fill="#4ea1ff" stroke="none"/></svg>Circle</a>
+  <nav><a href="#platform" data-i="n1"></a><a href="#capabilities" data-i="n2"></a><a href="#path" data-i="n3"></a></nav>
+  <div class="rt"><div class="lang" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">EN</button><button type="button" data-l="tr" aria-pressed="false">TR</button></div><a class="pill" href="#contact" data-i="n4"></a></div>
+</div></header>
+
+<section class="hero" id="top" aria-roledescription="carousel">
+  <div id="slides"></div>
+  <div class="ecg" aria-hidden="true"><svg viewBox="0 0 1200 140" preserveAspectRatio="none"><path class="base" pathLength="1" d="M0 70H170l14 -9 14 9H300l12 8 14 -58 16 84 12 -34H440l18 -14 22 14H640l12 8 14 -58 16 84 12 -34H780l18 -14 22 14H1000l12 8 14 -58 16 84 12 -34H1200"/><path class="pulse" pathLength="1" d="M0 70H170l14 -9 14 9H300l12 8 14 -58 16 84 12 -34H440l18 -14 22 14H640l12 8 14 -58 16 84 12 -34H780l18 -14 22 14H1000l12 8 14 -58 16 84 12 -34H1200"/></svg></div>
+  <div class="lead"><h1 data-i="h1"></h1></div>
+  <div class="ctrl">
+    <div class="tick" id="tick"></div>
+    <div class="arrows"><button id="pv" data-a="prev">‹</button><button id="nx" data-a="next">›</button></div>
+  </div>
+  <a class="scroll" href="#intro" data-i="explore"></a>
+</section>
+
+<section class="intro pad" id="intro"><div class="wrap">
+  <p data-i="intro"></p>
+  <div class="ecgd" aria-hidden="true"><svg viewBox="0 0 1200 56" preserveAspectRatio="none"><path class="base" pathLength="1" d="M0 28H200l8 -5 8 5H330l8 4 8 -24 8 36 6 -14H470l10 -6 12 6H700l8 4 8 -24 8 36 6 -14H840l10 -6 12 6H1060l8 4 8 -24 8 36 6 -14H1200"/><path class="pulse" pathLength="1" d="M0 28H200l8 -5 8 5H330l8 4 8 -24 8 36 6 -14H470l10 -6 12 6H700l8 4 8 -24 8 36 6 -14H840l10 -6 12 6H1060l8 4 8 -24 8 36 6 -14H1200"/></svg></div>
+  <div class="facts">
+    <div><strong data-n="16">0</strong><span data-i="f1"></span></div>
+    <div><strong data-n="13">0</strong><span data-i="f2"></span></div>
+    <div><strong data-n="17">0</strong><span data-i="f3"></span></div>
+    <div><strong data-n="24">0</strong><span data-i="f4"></span></div>
+  </div>
+</div></section>
+
+<section class="plat pad" id="platform"><div class="wrap">
+  <h2 data-i="plh"></h2>
+  <p class="sub" data-i="pls"></p>
+  <div class="tabs" role="tablist" id="tabs">
+    <button role="tab" aria-selected="true" data-t="0" data-i="tb1"></button>
+    <button role="tab" aria-selected="false" data-t="1" data-i="tb2"></button>
+    <button role="tab" aria-selected="false" data-t="2" data-i="tb3"></button>
+  </div>
+  <div class="win" aria-live="polite">
+    <div class="wbar"><i></i><i></i><i></i><span id="wt"></span></div>
+    <div class="wbody"><div class="side"><div class="a" data-i="sd1"></div><div data-i="sd2"></div><div data-i="sd3"></div><div data-i="sd4"></div><div data-i="sd5"></div></div><div class="main" id="pane"></div></div>
+  </div>
+</div></section>
+
+<section class="cap-s pad" id="capabilities"><div class="wrap">
+  <h2 data-i="ch"></h2>
+  <div class="list" id="list"></div>
+</div></section>
+
+<section class="path pad" id="path"><div class="wrap">
+  <h2 data-i="rh"></h2>
+  <div class="rail">
+    <div><b data-i="r1"></b><span data-i="d1"></span></div>
+    <div><b data-i="r2"></b><span data-i="d2"></span></div>
+    <div><b data-i="r3"></b><span data-i="d3"></span></div>
+    <div><b data-i="r4"></b><span data-i="d4"></span></div>
+    <div><b data-i="r5"></b><span>2027</span></div>
+  </div>
+</div></section>
+
+<section class="contact pad" id="contact"><div class="wrap"><div class="cbox">
+  <h2 data-i="kh"></h2>
+  <p data-i="kp"></p>
+  <div class="r"><span class="mail" data-i="mail"></span><a class="pill" href="#top" data-i="up"></a></div>
+</div></div></section>
+
+<footer class="pad"><div class="wrap">
+  <p data-i="ft1"></p>
+  <p data-i="ft2"></p>
+</div></footer>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s),NS="http://www.w3.org/2000/svg";
+
+/* ---------- athletes: pictogram figures from joint coordinates (400x400 box) ---------- */
+function pic(P){
+  const w={torso:30,arm:13,leg:19};
+  let s="";
+  const line=(pts,sw,op)=>`<polyline points="${pts.map(p=>p.join(",")).join(" ")}" fill="none" stroke="#fff" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" opacity="${op||1}"/>`;
+  (P.back||[]).forEach(l=>s+=line(l.p,l.w||w.leg,.62));
+  (P.mid||[]).forEach(l=>s+=line(l.p,l.w||w.torso,1));
+  if(P.head)s+=`<circle cx="${P.head[0]}" cy="${P.head[1]}" r="${P.hr||23}" fill="#fff"/>`;
+  (P.front||[]).forEach(l=>s+=line(l.p,l.w||w.arm,1));
+  (P.gear||"")&&(s+=P.gear);
+  return `<svg viewBox="0 0 400 400" aria-hidden="true"><g>${s}</g></svg>`;
+}
+const SPRINT=pic({
+  head:[262,66],hr:24,
+  back:[{p:[[205,205],[160,270],[95,262]],w:19},{p:[[232,108],[190,150],[160,120]],w:13}],
+  mid:[{p:[[232,112],[206,200]],w:31}],
+  front:[{p:[[206,205],[272,238],[262,318]],w:20},{p:[[236,110],[282,150],[322,118]],w:13}]
+});
+const SWIM=pic({
+  head:[330,198],hr:22,
+  back:[{p:[[160,222],[100,232],[40,216]],w:17},{p:[[290,210],[268,262],[218,266]],w:13}],
+  mid:[{p:[[296,210],[166,220]],w:31}],
+  front:[{p:[[166,224],[104,242],[46,252]],w:19},{p:[[292,206],[330,140],[388,168]],w:13}]
+});
+const BIKE=pic({
+  head:[300,92],hr:22,
+  back:[{p:[[188,196],[238,258],[210,296]],w:19}],
+  mid:[{p:[[184,200],[268,128]],w:31}],
+  front:[{p:[[188,200],[250,236],[236,296]],w:20},{p:[[262,134],[312,170],[310,214]],w:13}],
+  gear:`<g fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".9"><circle cx="92" cy="300" r="66"/><circle cx="316" cy="300" r="66"/><path d="M92 300 L190 214 L250 300 M190 214 L300 214 L316 300 M300 214 L310 190"/></g>`
+});
+const ARCH=pic({
+  head:[196,58],hr:24,
+  back:[{p:[[190,214],[178,300],[170,380]],w:20}],
+  mid:[{p:[[196,96],[196,216]],w:33}],
+  front:[{p:[[198,214],[216,300],[226,380]],w:20},{p:[[200,106],[290,108],[352,108]],w:13},{p:[[194,104],[150,96],[218,84]],w:13}],
+  gear:`<path d="M338 20 Q408 108 338 196" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M338 20 L222 86 L338 196" fill="none" stroke="#fff" stroke-width="2.5" opacity=".8"/><path d="M222 86 L396 108" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".9"/>`
+});
+const HURD=pic({
+  head:[280,96],hr:23,
+  back:[{p:[[198,208],[150,236],[96,258]],w:19},{p:[[246,132],[200,118],[150,96]],w:13}],
+  mid:[{p:[[198,208],[250,128]],w:31}],
+  front:[{p:[[200,210],[274,200],[352,200]],w:20},{p:[[250,134],[300,146],[346,126]],w:13}],
+  gear:`<g stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".75"><path d="M356 232 V330 M392 232 V330"/></g><rect x="352" y="224" width="44" height="10" rx="3" fill="#fff" opacity=".9"/>`
+});
+
+const T={
+en:{
+ title:"Circle Event Health",
+ n1:"Platform",n2:"Capabilities",n3:"Roadmap",n4:"Contact",
+ h1:"The digital backbone of health <b>for major games.</b>",explore:"Explore",prev:"Previous",next:"Next",carousel:"Sports and health capabilities",
+ intro:"When an athlete is injured, a sample travels to the lab or a hotel gets a food complaint, institutions do the work. <em>Circle</em> owns the handover between them: who took over what, and when, on the record.",
+ f1:"integrated modules",f2:"user roles",f3:"competition venues",f4:"hours of continuous operation",
+ plh:"One screen from command centre to field.",pls:"Real-time incident management, anti-doping chain of custody and insurance files on one platform. The screens below are an interface draft running on sample data.",
+ tb1:"Command",tb2:"Anti-doping chain",tb3:"Insurance file",
+ sd1:"Overview",sd2:"Incidents",sd3:"Hospitals",sd4:"Ambulances",sd5:"Reports",
+ ch:"Everything health-related, in one chain.",
+ rh:"Planned to be ready for the Games.",
+ r1:"Discovery",d1:"Oct – Nov 2026",r2:"Foundations",d2:"Nov – Dec 2026",r3:"Core and demo",d3:"Jan – Feb 2027",r4:"Exercises",d4:"Mar – Jun 2027",r5:"The Games",
+ kh:"Let's build it together.",kp:"We are open to working with organisers and health and insurance partners. Write to us for a live demonstration of the platform.",mail:"contact@YOURDOMAIN",up:"Back to top",
+ ft1:"Circle is an independent software product developed by Eternity Labs.",
+ ft2:"This is not an official organiser website. The name and marks of the Istanbul 2027 European Games belong to their rights holders and are mentioned here for information only. All screens and data shown are fictional."
+},
+tr:{
+ title:"Circle Oyun Sağlığı",
+ n1:"Platform",n2:"Yetenekler",n3:"Yol haritası",n4:"İletişim",
+ h1:"Büyük oyunlar için <b>sağlığın dijital altyapısı.</b>",explore:"Keşfet",prev:"Önceki",next:"Sonraki",carousel:"Sporlar ve sağlık yetenekleri",
+ intro:"Bir sporcu yaralandığında, bir numune laboratuvara giderken ya da bir otelde yemek şikâyeti geldiğinde işi kurumlar yapar. <em>Circle</em> ise aralarındaki devri sahiplenir: kim, ne zaman, neyi devraldı, kayıt altında.",
+ f1:"entegre modül",f2:"kullanıcı rolü",f3:"müsabaka mekânı",f4:"saat kesintisiz işletim",
+ plh:"Komuta merkezinden sahaya tek ekran.",pls:"Gerçek zamanlı olay yönetimi, doping zinciri ve sigorta dosyası aynı platformda. Aşağıdaki ekranlar örnek verilerle çalışan arayüz taslağıdır.",
+ tb1:"Komuta",tb2:"Doping zinciri",tb3:"Sigorta dosyası",
+ sd1:"Genel bakış",sd2:"Olaylar",sd3:"Hastaneler",sd4:"Ambulanslar",sd5:"Raporlar",
+ ch:"Sağlıkla ilgili ne varsa, tek zincirde.",
+ rh:"Oyunlara hazır olacak şekilde planlandı.",
+ r1:"Keşif",d1:"Ekim – Kasım 2026",r2:"Temel",d2:"Kasım – Aralık 2026",r3:"Çekirdek ve demo",d3:"Ocak – Şubat 2027",r4:"Tatbikat",d4:"Mart – Haziran 2027",r5:"Oyunlar",
+ kh:"Birlikte kuralım.",kp:"Organizasyon, sağlık ve sigorta paydaşlarıyla ortak çalışmaya açığız. Platformun canlı gösterimi için yazın.",mail:"iletisim@ALANADI",up:"Başa dön",
+ ft1:"Circle, Eternity Labs tarafından geliştirilen bağımsız bir yazılım ürünüdür.",
+ ft2:"Bu site resmî bir organizasyon sitesi değildir. İstanbul 2027 Avrupa Oyunları adı ve işaretleri ilgili hak sahiplerine aittir ve burada yalnızca bilgi amacıyla anılmıştır. Gösterilen ekranlar ve veriler kurgudur."
+}};
+let lang="en";
+try{const sv=localStorage.getItem("circle-lang");if(sv==="tr"||sv==="en")lang=sv}catch(e){}
+try{const ql=new URLSearchParams(location.search).get("lang");if(ql==="tr"||ql==="en")lang=ql}catch(e){}
+const L=o=>o[lang];
+
+const S=[
+ {bg:"linear-gradient(120deg,#041433 0%,#0a3a9e 60%,#1b6bff 100%)",k:{en:"Sprint",tr:"Sprint"},t:{en:"The first minute on the field",tr:"Sahada ilk dakika"},d:{en:"The moment an incident opens, the nearest team, ambulance and hospital come together in one record.",tr:"Olay açıldığı anda en yakın ekip, ambulans ve hastane tek kayıtta bir araya gelir."},f:SPRINT,hr:172,sp:98,deco:"streak"},
+ {bg:"linear-gradient(130deg,#031a3d 0%,#05508f 55%,#2aa3e8 100%)",k:{en:"Swimming",tr:"Yüzme"},t:{en:"From the pool to the lab",tr:"Havuzdan laboratuvara"},d:{en:"Every handover of a doping sample is signed by QR code, so no link in the chain breaks.",tr:"Doping numunesinin her teslimi karekodla imzalanır, zincirin hiçbir halkası kopmaz."},f:SWIM,hr:154,sp:97,deco:"wave"},
+ {bg:"linear-gradient(120deg,#06163a 0%,#103a8a 55%,#3d7bff 100%)",k:{en:"Cycling",tr:"Bisiklet"},t:{en:"Every athlete on the course",tr:"Parkurdaki her sporcu"},d:{en:"Location, hospital capacity and traffic are tracked together, so nobody drops out of sight along the route.",tr:"Konum, hastane kapasitesi ve trafik birlikte izlenir; yol boyunca kimse görünmez kalmaz."},f:BIKE,hr:148,sp:98,deco:"streak"},
+ {bg:"linear-gradient(120deg,#041433 0%,#0b2f86 55%,#2d5be0 100%)",k:{en:"Archery",tr:"Okçuluk"},t:{en:"Straight to the target",tr:"Hedefe tam isabet"},d:{en:"Every task is assigned to a single owner. No handover is left without one.",tr:"Her görev tek bir sahibe atanır. Sahipsiz devir kalmaz."},f:ARCH,hr:78,sp:99,deco:"ring"},
+ {bg:"linear-gradient(120deg,#031230 0%,#0a2a73 50%,#0a6ad6 100%)",k:{en:"Hurdles",tr:"Engelli koşu"},t:{en:"Handovers without hurdles",tr:"Engelsiz devir"},d:{en:"The insurance file builds itself as the case progresses. No chasing paperwork.",tr:"Sigorta dosyası vaka ilerledikçe kendiliğinden hazırlanır; evrak peşinde koşulmaz."},f:HURD,hr:181,sp:97,deco:"streak"}
+];
+const sl=$("#slides"),tk=$("#tick");
+S.forEach((o,i)=>{
+  const e=document.createElement("div");e.className="slide";e.style.setProperty("--bg",o.bg);
+  let deco='<div class="glow" style="width:38vw;height:38vw;right:-6vw;top:10%;background:#2f7bff"></div>';
+  if(o.deco==="streak"){for(let j=0;j<14;j++){deco+=`<i class="streak" style="top:${8+Math.random()*80}%;width:${80+Math.random()*260}px;left:${40+Math.random()*60}%;animation-duration:${2.4+Math.random()*3.4}s;animation-delay:${-Math.random()*5}s;opacity:${.25+Math.random()*.5}"></i>`}}
+  if(o.deco==="ring"){deco+=[60,44,28,12].map(v=>`<i class="ring" style="width:${v}vmin;height:${v}vmin;animation-duration:${50-v}s"></i>`).join("")}
+  if(o.deco==="wave"){deco+=`<svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 60 Q150 20 300 60 T600 60 T900 60 T1200 60 V120 H0Z" fill="#fff"/></svg>`}
+  for(let j=0;j<7;j++){deco+=`<i class="plus" style="--s:${14+Math.random()*26}px;left:${Math.random()*96}%;top:${10+Math.random()*80}%;animation-duration:${7+Math.random()*7}s;animation-delay:${-Math.random()*8}s"></i>`}
+  const heart='<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 28C6 20 3 14.5 3 10.5 3 7 5.7 4.5 9 4.5c2.8 0 5 1.6 7 4.2 2-2.600 4.200-4.200 7-4.200 3.300 0 6 2.500 6 6 0 4-3 9.500-13 17.500z"/></svg>';
+  e.innerHTML=`<div class="deco">${deco}</div><div class="fig">${o.f}</div><div class="vit">${heart}<div><b class="v1">${o.hr}</b><small>bpm</small></div><div><b>${o.sp}%</b><small>SpO₂</small></div><em></em></div><div class="cap"><small></small><h2></h2><p></p></div>`;
+  e.setAttribute("role","group");
+  sl.appendChild(e);
+  const b=document.createElement("button");b.innerHTML="<i></i>";b.onclick=()=>go(i,true);tk.appendChild(b);
+});
+const slides=[...sl.children],ticks=[...tk.children],DUR=7000;
+let cur=-1,timer=0;
+const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+function go(i,user){
+  i=(i+S.length)%S.length;
+  slides.forEach((s,j)=>s.classList.toggle("on",j===i));
+  ticks.forEach((t,j)=>{t.classList.remove("on");t.classList.toggle("done",j<i);if(j===i){void t.offsetWidth;t.classList.add("on");t.style.setProperty("--d",DUR+"ms")}});
+  cur=i;clearTimeout(timer);if(!reduce)timer=setTimeout(()=>go(cur+1),DUR);
+  if(user&&reduce)ticks[i].classList.add("done");
+}
+$("#pv").onclick=()=>go(cur-1,true);$("#nx").onclick=()=>go(cur+1,true);
+const hero=$("#top");
+hero.addEventListener("mouseenter",()=>{hero.classList.add("paused");clearTimeout(timer)});
+hero.addEventListener("mouseleave",()=>{hero.classList.remove("paused");if(!reduce)timer=setTimeout(()=>go(cur+1),DUR/2)});
+let tx=0,ty=0;
+hero.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+hero.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.4)go(cur+(dx<0?1:-1),true)},{passive:true});
+addEventListener("keydown",e=>{if(e.key==="ArrowRight")go(cur+1,true);if(e.key==="ArrowLeft")go(cur-1,true)});
+
+const hd=$("#hd");const onS=()=>hd.classList.toggle("solid",scrollY>hero.offsetHeight-90);addEventListener("scroll",onS,{passive:true});onS();
+
+function count(){document.querySelectorAll("[data-n]").forEach(e=>{const t=+e.dataset.n,t0=performance.now();(function f(n){const p=Math.min(1,(n-t0)/1200);e.textContent=Math.round(t*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)})}
+let cd=false;const fx=$(".facts");
+if("IntersectionObserver" in window){new IntersectionObserver((es,o)=>es.forEach(x=>{if(x.isIntersecting&&!cd){cd=true;count();o.disconnect()}}),{threshold:.4}).observe(fx)}else count();
+
+/* platform panes */
+const P={
+en:[
+ {t:"Circle · Command centre",h:`<div class="kpis"><div class="kpi"><b>3</b><span>open incidents</span></div><div class="kpi"><b>11 min</b><span>average arrival</span></div><div class="kpi"><b>0</b><span>unowned handovers</span></div></div>
+  <div class="two"><div>
+   <div class="row"><div>Basketball hall · Knee injury<small>Ambulance 4 en route · Field medical team</small></div><span class="tag">En route</span></div>
+   <div class="row"><div>Swimming pool · Fainting<small>Handed over to hospital</small></div><span class="tag ok">Handed over</span></div>
+   <div class="row"><div>Athletics track · Muscle cramp<small>Team doctor notified</small></div><span class="tag wait">Assessing</span></div>
+  </div><div class="bars">
+   <div>North City Hospital · 11 min<em style="--w:92%"></em></div>
+   <div>University Hospital · 14 min<em style="--w:74%"></em></div>
+   <div>State Hospital · 17 min<em style="--w:55%"></em></div>
+  </div></div>`},
+ {t:"Circle · Anti-doping chain of custody",h:`<div class="kpis"><div class="kpi"><b>42</b><span>samples today</span></div><div class="kpi"><b>41</b><span>chain complete</span></div><div class="kpi"><b>1</b><span>awaiting delivery</span></div></div>
+  <div class="chain"><div class="node ok"><b>Collection</b><time>09:12 · Control officer</time></div><div class="node ok"><b>Seal</b><time>09:20 · Athlete consent</time></div><div class="node ok"><b>Transport</b><time>09:48 · Courier</time></div><div class="node cur"><b>Delivery</b><time>Awaiting laboratory</time></div><div class="node"><b>Analysis</b><time>Pending</time></div></div>
+  <div class="row" style="margin-top:1.2rem"><div>Sample #A-2048<small>Every step is signed by QR code and recorded in a tamper-proof log</small></div><span class="tag">Delivery next</span></div>`},
+ {t:"Circle · Insurance and claims",h:`<div class="kpis"><div class="kpi"><b>80%</b><span>file ready</span></div><div class="kpi"><b>5/6</b><span>documents complete</span></div><div class="kpi"><b>2 h</b><span>hospital notification</span></div></div>
+  <div class="prog"><i style="--w:80%"></i></div>
+  <div class="chk"><div class="d"><b>✓</b><span>Incident report<br><small style="color:#ffffff80">Field medical team, automatic</small></span></div><div class="d"><b>✓</b><span>Hospital admission record</span></div><div class="d"><b>✓</b><span>Health passport summary</span></div><div class="d"><b>✓</b><span>Treatment items</span></div><div class="d"><b>✓</b><span>Athlete consent</span></div><div><b></b><span>Discharge summary · awaited from hospital</span></div></div>`}],
+tr:[
+ {t:"Circle · Komuta merkezi",h:`<div class="kpis"><div class="kpi"><b>3</b><span>açık olay</span></div><div class="kpi"><b>11 dk</b><span>ortalama varış</span></div><div class="kpi"><b>0</b><span>sahipsiz devir</span></div></div>
+  <div class="two"><div>
+   <div class="row"><div>Basketbol salonu · Diz yaralanması<small>Ambulans 4 yolda · Saha sağlık ekibi</small></div><span class="tag">Yolda</span></div>
+   <div class="row"><div>Yüzme havuzu · Bayılma<small>Hastaneye devredildi</small></div><span class="tag ok">Devredildi</span></div>
+   <div class="row"><div>Atletizm pisti · Kas çekmesi<small>Takım doktoru bilgilendirildi</small></div><span class="tag wait">Değerlendirmede</span></div>
+  </div><div class="bars">
+   <div>Kuzey Şehir Hastanesi · 11 dk<em style="--w:92%"></em></div>
+   <div>Üniversite Hastanesi · 14 dk<em style="--w:74%"></em></div>
+   <div>Devlet Hastanesi · 17 dk<em style="--w:55%"></em></div>
+  </div></div>`},
+ {t:"Circle · Doping kontrol zinciri",h:`<div class="kpis"><div class="kpi"><b>42</b><span>numune bugün</span></div><div class="kpi"><b>41</b><span>zincir tam</span></div><div class="kpi"><b>1</b><span>teslim bekliyor</span></div></div>
+  <div class="chain"><div class="node ok"><b>Alım</b><time>09:12 · Kontrol görevlisi</time></div><div class="node ok"><b>Mühür</b><time>09:20 · Sporcu onayı</time></div><div class="node ok"><b>Taşıma</b><time>09:48 · Kurye</time></div><div class="node cur"><b>Teslim</b><time>Laboratuvar bekleniyor</time></div><div class="node"><b>Analiz</b><time>Beklemede</time></div></div>
+  <div class="row" style="margin-top:1.2rem"><div>Numune #A-2048<small>Her adım karekodla imzalanır ve değiştirilemez şekilde kaydedilir</small></div><span class="tag">Teslim sırada</span></div>`},
+ {t:"Circle · Sigorta ve hasar",h:`<div class="kpis"><div class="kpi"><b>%80</b><span>dosya hazır</span></div><div class="kpi"><b>5/6</b><span>belge tamam</span></div><div class="kpi"><b>2 sa</b><span>hastaneye bildirim</span></div></div>
+  <div class="prog"><i style="--w:80%"></i></div>
+  <div class="chk"><div class="d"><b>✓</b><span>Olay raporu<br><small style="color:#ffffff80">Saha sağlık ekibi, otomatik</small></span></div><div class="d"><b>✓</b><span>Hastane kabul belgesi</span></div><div class="d"><b>✓</b><span>Sağlık pasaportu özeti</span></div><div class="d"><b>✓</b><span>Tedavi kalemleri</span></div><div class="d"><b>✓</b><span>Sporcu onayı</span></div><div><b></b><span>Taburcu özeti · hastaneden bekleniyor</span></div></div>`}]};
+let curPane=0;
+function pane(i){curPane=i;const p=P[lang][i];$("#pane").innerHTML=p.h;$("#wt").textContent=p.t;document.querySelectorAll("#tabs button").forEach((b,j)=>b.setAttribute("aria-selected",j===i));
+  requestAnimationFrame(()=>document.querySelectorAll("#pane [style*='--w']").forEach(e=>{const w=e.style.getPropertyValue("--w");e.style.setProperty("--w","0%");requestAnimationFrame(()=>e.style.setProperty("--w",w))}))}
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>pane(+b.dataset.t));
+
+/* capabilities */
+const ic=d=>`<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const CAP=[
+ [{en:"Incident and case management",tr:"Olay ve vaka yönetimi"},{en:"A case opened from the field with one tap; location, discipline and team fill in automatically.",tr:"Sahadan tek dokunuşla açılan vaka; konum, branş ve ekip otomatik gelir."},'<path d="M16 4v24M4 16h24"/><circle cx="16" cy="16" r="11"/>'],
+ [{en:"Hospitals and ambulances",tr:"Hastane ve ambulans"},{en:"Hospital ranking by distance, traffic and load, plus fleet tracking.",tr:"Mesafe, trafik ve doluluğa göre hastane sıralaması, filo takibi."},'<rect x="5" y="9" width="22" height="14" rx="3"/><path d="M12 16h8M16 12v8"/>'],
+ [{en:"Gray-spot engine",tr:"Gri alan motoru"},{en:"Defines handovers between institutions, assigns an owner and alerts when time runs out.",tr:"Kurumlar arası devirleri tanımlar, sahibini atar, süre aşımında uyarır."},'<circle cx="9" cy="16" r="5"/><circle cx="23" cy="16" r="5"/><path d="M14 16h4" stroke-dasharray="2 3"/>'],
+ [{en:"Anti-doping chain",tr:"Doping zinciri"},{en:"A QR-signed, tamper-proof delivery record from sample collection to the laboratory.",tr:"Numune alımından laboratuvara karekodlu, değiştirilemez teslim kaydı."},'<path d="M13 4h6M14 4v8l-7 12a3 3 0 0 0 3 4h12a3 3 0 0 0 3-4l-7-12V4"/>'],
+ [{en:"Food safety",tr:"Gıda güvenliği"},{en:"Meal records, allergen warnings and clustering of complaints.",tr:"Öğün kayıtları, alerjen uyarıları ve şikâyetlerin kümelenmesi."},'<path d="M9 5v8a4 4 0 0 0 8 0V5M13 5v22M23 5c-3 3-3 9 0 11v11"/>'],
+ [{en:"Insurance and claims",tr:"Sigorta ve hasar"},{en:"A claim file that fills itself as the case progresses, ready for the insurer.",tr:"Vaka ilerledikçe kendiliğinden dolan, sigortacıya hazır dosya."},'<path d="M16 4l10 4v8c0 6-4 10-10 12C10 26 6 22 6 16V8z"/><path d="M12 16l3 3 5-6"/>'],
+ [{en:"Workforce and logistics",tr:"İş gücü ve lojistik"},{en:"Shifts, skills, medicine and equipment stock, with temperature and expiry tracking.",tr:"Vardiya, yetkinlik, ilaç ve ekipman stoğu; sıcaklık ve son kullanma takibi."},'<circle cx="12" cy="11" r="4"/><path d="M4 26c0-5 4-8 8-8s8 3 8 8M22 8a4 4 0 0 1 0 8M26 26c0-3-1-6-4-7"/>'],
+ [{en:"Public health and reports",tr:"Halk sağlığı ve raporlar"},{en:"Surveillance, inspection tasks and a set of reports generated automatically every day.",tr:"Sürveyans, denetim görevleri ve her gün otomatik üretilen rapor seti."},'<path d="M5 27V5M5 27h22"/><path d="M9 21l5-6 4 3 7-9"/>']
+];
+
+/* apply language */
+function apply(){
+  const t=T[lang];
+  document.documentElement.lang=lang;document.title=t.title;
+  document.querySelectorAll("[data-i]").forEach(e=>{e.innerHTML=t[e.dataset.i]});
+  document.querySelectorAll("[data-a]").forEach(e=>e.setAttribute("aria-label",t[e.dataset.a]));
+  hero.setAttribute("aria-label",t.carousel);
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
+  S.forEach((o,i)=>{const c=slides[i];c.querySelector(".cap small").textContent=L(o.k);c.querySelector(".cap h2").textContent=L(o.t);c.querySelector(".cap p").textContent=L(o.d);
+    c.setAttribute("aria-label",(i+1)+" / "+S.length+": "+L(o.t));ticks[i].setAttribute("aria-label",L(o.k)+": "+L(o.t))});
+  $("#list").innerHTML=CAP.map(c=>`<div>${ic(c[2])}<h3>${L(c[0])}</h3><p>${L(c[1])}</p></div>`).join("");
+  pane(curPane);
+  document.querySelectorAll(".vit em").forEach(e=>e.textContent=lang==="tr"?"canlı":"live");
+}
+setInterval(()=>{const e=slides[cur]&&slides[cur].querySelector(".v1");if(e&&S[cur])e.textContent=S[cur].hr+Math.round((Math.random()-.5)*6)},1100);
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{lang=b.dataset.l;try{localStorage.setItem("circle-lang",lang)}catch(e){}apply()});
+let q=0;try{q=parseInt(new URLSearchParams(location.search).get("s"))||0}catch(e){}
+apply();go(q);
+})();
+</script>
+
+</body>
+</html>
