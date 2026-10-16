@@ -270,8 +270,6 @@ footer p+p{margin-top:.5rem;max-width:56em}
   </div>
 </div></section>
 
-<section class="bring pad" id="bring"><div class="wrap"><div class="five" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><h2 data-i="bh"></h2><div class="tiles" id="tiles"></div></div></section>
-
 <section class="plat pad" id="platform"><div class="wrap">
   <div class="five" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><h2 data-i="plh"></h2>
   <p class="sub" data-i="pls"></p>
@@ -526,7 +524,6 @@ function apply(){
   S.forEach((o,i)=>{const c=slides[i];c.querySelector(".cap small").textContent=L(o.k);c.querySelector(".cap h2").textContent=L(o.t);c.querySelector(".cap p").textContent=L(o.d);
     c.setAttribute("aria-label",(i+1)+" / "+S.length+": "+L(o.t));ticks[i].setAttribute("aria-label",L(o.k)+": "+L(o.t))});
   $("#list").innerHTML=CAP.map(c=>`<div>${ic(c[2])}<h3>${L(c[0])}</h3><p>${L(c[1])}</p></div>`).join("");
-  $("#tiles").innerHTML=PHOTO.map(o=>`<a class="tile" href="#platform" style="--c:${o.tc}"><div class="tbg" style="background-image:url(${o.ph})"></div><div class="ticon">${o.f}</div><h3>${L(o.tt)}</h3><p>${L(o.td)}</p></a>`).join("");
   pane(curPane);
   document.querySelectorAll(".vit em").forEach(e=>e.textContent=lang==="tr"?"canlı":"live");
 }
