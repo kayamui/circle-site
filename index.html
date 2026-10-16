@@ -60,14 +60,14 @@ nav a{color:#ffffffcc;text-decoration:none}nav a:hover{color:#fff}
 .slide.on .cap h2{transition-delay:.45s}.slide.on .cap p{transition-delay:.55s}
 
 .lead{position:absolute;left:clamp(20px,5vw,72px);top:clamp(6.2rem,17vh,9rem);z-index:6;max-width:46rem;pointer-events:none}
-.lead h1{font-size:clamp(2.1rem,5.2vw,4.6rem);font-weight:300;color:#fff}
+.lead h1{font-size:clamp(2.1rem,4.4vw,4rem);font-weight:300;color:#fff}
 .lead .sub2{margin-top:1.1rem;font-size:1.15rem;color:#ffffffcc;font-weight:500}
 .lead h1 b{font-weight:600}
 .ctrl{position:absolute;z-index:7;left:clamp(20px,5vw,72px);right:clamp(20px,5vw,72px);bottom:clamp(20px,4.5vh,40px);display:flex;align-items:center;gap:1.2rem}
 .tick{flex:1;display:flex;gap:.6rem}
 .tick button{flex:1;max-width:5.5rem;height:1.6rem;background:none;border:0;cursor:pointer;display:flex;align-items:center;padding:0}
 .tick button i{display:block;width:100%;height:3px;background:#ffffff40;border-radius:3px;overflow:hidden}
-.tick button i::after{content:"";display:block;height:100%;width:0;background:#fff}
+.tick button i::after{content:"";display:block;height:100%;width:0;background:var(--tc,#fff)}
 .tick button.on i::after{animation:fill var(--d,7s) linear forwards}
 .tick button.done i::after{width:100%}
 .paused .tick button.on i::after{animation-play-state:paused}
@@ -191,6 +191,22 @@ footer p+p{margin-top:.5rem;max-width:56em}
 .vit small{font-size:.72rem;color:#ffffffa8;letter-spacing:.06em}
 .vit em{font-style:normal;font-size:.7rem;font-weight:600;color:#7be9b0;letter-spacing:.1em;text-transform:uppercase;margin-left:.2rem}
 @media(max-width:820px){.vit{top:auto;bottom:auto;right:20px;top:calc(50% - 1rem);padding:.5rem .8rem;gap:.7rem}.vit b{font-size:1.15rem}.vit svg{width:1.5rem;height:1.5rem}.ecg{top:36%}}
+
+/* olympic spirit */
+.topstripe{position:fixed;left:0;right:0;top:0;height:4px;z-index:50;background:linear-gradient(90deg,#0085c7 0 20%,#f4c300 20% 40%,#1c2230 40% 60%,#009f3d 60% 80%,#df0024 80%)}
+.five{display:flex;gap:7px;margin-bottom:1.1rem}
+.five i{width:11px;height:11px;border-radius:50%;display:block}
+.five i:nth-child(1){background:#0085c7}.five i:nth-child(2){background:#f4c300}.five i:nth-child(3){background:#1c2230;box-shadow:0 0 0 1.5px #ffffff55}.five i:nth-child(4){background:#009f3d}.five i:nth-child(5){background:#df0024}
+.path .five i:nth-child(3),.cap-s .five i:nth-child(3),.intro .five i:nth-child(3){box-shadow:none}
+.wreath{position:absolute;right:clamp(0px,3vw,64px);bottom:3vh;height:min(88%,820px);aspect-ratio:1;color:#fff;opacity:.09;pointer-events:none}
+.wreath svg{width:100%;height:100%}
+.facts div{border-top:4px solid var(--oc);padding-top:.9rem}
+.facts{border-top:0!important;padding-top:0!important}
+.rail div:nth-child(1)::before{background:#0085c7}.rail div:nth-child(2)::before{background:#f4c300}.rail div:nth-child(3)::before{background:#1c2230}.rail div:nth-child(4)::before{background:#009f3d}.rail div:nth-child(5)::before{background:#df0024}
+.pod{position:absolute;right:7%;bottom:0;width:min(260px,34%);z-index:1}
+@media(max-width:700px){.pod{display:none}}
+.ecg{top:47%}
+@media(max-width:820px){.wreath{right:50%;translate:50% 0;height:56%;bottom:auto;top:30%}.ecg{top:40%}}
 .bt{display:flex;flex-direction:column;line-height:1.1;font-size:1.05rem}
 .bt small{font-size:.66rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#ffffffb0;margin-top:.2rem}
 .lang{display:flex;border:1px solid #ffffff55;border-radius:999px;padding:2px}
@@ -203,8 +219,9 @@ footer p+p{margin-top:.5rem;max-width:56em}
 </head>
 <body>
 
+<div class="topstripe" aria-hidden="true"></div>
 <header id="hd"><div class="bar pad">
-  <a class="brand" href="#top" aria-label="Health Directorate"><svg viewBox="0 0 32 32" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="16" r="13" stroke="#fff" stroke-width="2.2"/><path d="M16 6.8v18.4" stroke="#fff" stroke-width="2"/><path d="M16 22.6c-5-1.4-5-4.8 0-6.2s5-4.800 0-5.600" stroke="#4ea1ff" stroke-width="2.4"/><circle cx="18.600" cy="8.200" r="1.700" fill="#4ea1ff" stroke="none"/></svg><span class="bt"><span data-i="bt1"></span><small data-i="bt2"></small></span></a>
+  <a class="brand" href="#top" aria-label="Health Directorate"><svg viewBox="0 0 32 32" style="color:#fff" aria-hidden="true"><path d="M16.00 27.20 L14.96 27.15 L13.93 27.01 L12.91 26.77 L11.93 26.43 L10.97 26.01 L10.06 25.50 L9.21 24.91 L8.41 24.24 L7.68 23.49 L7.02 22.69 L6.43 21.82 L5.93 20.91 L5.52 19.95 L5.20 18.96 L4.97 17.94 L4.84 16.91 L4.80 15.87 L4.86 14.83 L5.02 13.80 L5.27 12.79 L5.62 11.80 L6.05 10.86 L6.57 9.95 L7.17 9.10" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="10.59" cy="27.70" rx="3" ry="1.15" transform="rotate(158.0 10.59 27.70)" fill="currentColor"/><ellipse cx="5.13" cy="22.93" rx="3" ry="1.15" transform="rotate(-169.3 5.13 22.93)" fill="currentColor"/><ellipse cx="3.11" cy="15.97" rx="3" ry="1.15" transform="rotate(-136.7 3.11 15.97)" fill="currentColor"/><ellipse cx="5.16" cy="9.02" rx="3" ry="1.15" transform="rotate(-104.0 5.16 9.02)" fill="currentColor"/><path d="M16.00 27.20 L17.04 27.15 L18.07 27.01 L19.09 26.77 L20.07 26.43 L21.03 26.01 L21.94 25.50 L22.79 24.91 L23.59 24.24 L24.32 23.49 L24.98 22.69 L25.57 21.82 L26.07 20.91 L26.48 19.95 L26.80 18.96 L27.03 17.94 L27.16 16.91 L27.20 15.87 L27.14 14.83 L26.98 13.80 L26.73 12.79 L26.38 11.80 L25.95 10.86 L25.43 9.95 L24.83 9.10" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="21.41" cy="27.70" rx="3" ry="1.15" transform="rotate(22.0 21.41 27.70)" fill="currentColor"/><ellipse cx="26.87" cy="22.93" rx="3" ry="1.15" transform="rotate(-10.7 26.87 22.93)" fill="currentColor"/><ellipse cx="28.89" cy="15.97" rx="3" ry="1.15" transform="rotate(-43.3 28.89 15.97)" fill="currentColor"/><ellipse cx="26.84" cy="9.02" rx="3" ry="1.15" transform="rotate(-76.0 26.84 9.02)" fill="currentColor"/><path d="M16 12.4v7.2M12.4 16h7.2" stroke="#4ea1ff" stroke-width="2.6" stroke-linecap="round"/></svg><span class="bt"><span data-i="bt1"></span><small data-i="bt2"></small></span></a>
   <nav><a href="#platform" data-i="n1"></a><a href="#capabilities" data-i="n2"></a><a href="#path" data-i="n3"></a></nav>
   <div class="rt"><div class="lang" role="group" aria-label="Language"><button type="button" data-l="en" aria-pressed="true">EN</button><button type="button" data-l="tr" aria-pressed="false">TR</button></div><a class="pill" href="#contact" data-i="n4"></a></div>
 </div></header>
@@ -224,15 +241,15 @@ footer p+p{margin-top:.5rem;max-width:56em}
   <p data-i="intro"></p>
   <div class="ecgd" aria-hidden="true"><svg viewBox="0 0 1200 56" preserveAspectRatio="none"><path class="base" pathLength="1" d="M0 28H200l8 -5 8 5H330l8 4 8 -24 8 36 6 -14H470l10 -6 12 6H700l8 4 8 -24 8 36 6 -14H840l10 -6 12 6H1060l8 4 8 -24 8 36 6 -14H1200"/><path class="pulse" pathLength="1" d="M0 28H200l8 -5 8 5H330l8 4 8 -24 8 36 6 -14H470l10 -6 12 6H700l8 4 8 -24 8 36 6 -14H840l10 -6 12 6H1060l8 4 8 -24 8 36 6 -14H1200"/></svg></div>
   <div class="facts">
-    <div><strong data-n="16">0</strong><span data-i="f1"></span></div>
-    <div><strong data-n="13">0</strong><span data-i="f2"></span></div>
-    <div><strong data-n="17">0</strong><span data-i="f3"></span></div>
-    <div><strong data-n="24">0</strong><span data-i="f4"></span></div>
+    <div style="--oc:#0085c7"><strong data-n="16">0</strong><span data-i="f1"></span></div>
+    <div style="--oc:#f4c300"><strong data-n="13">0</strong><span data-i="f2"></span></div>
+    <div style="--oc:#009f3d"><strong data-n="17">0</strong><span data-i="f3"></span></div>
+    <div style="--oc:#df0024"><strong data-n="24">0</strong><span data-i="f4"></span></div>
   </div>
 </div></section>
 
 <section class="plat pad" id="platform"><div class="wrap">
-  <h2 data-i="plh"></h2>
+  <div class="five" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><h2 data-i="plh"></h2>
   <p class="sub" data-i="pls"></p>
   <div class="tabs" role="tablist" id="tabs">
     <button role="tab" aria-selected="true" data-t="0" data-i="tb1"></button>
@@ -246,12 +263,12 @@ footer p+p{margin-top:.5rem;max-width:56em}
 </div></section>
 
 <section class="cap-s pad" id="capabilities"><div class="wrap">
-  <h2 data-i="ch"></h2>
+  <div class="five" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><h2 data-i="ch"></h2>
   <div class="list" id="list"></div>
 </div></section>
 
 <section class="path pad" id="path"><div class="wrap">
-  <h2 data-i="rh"></h2>
+  <div class="five" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><h2 data-i="rh"></h2>
   <div class="rail">
     <div><b data-i="r1"></b><span data-i="d1"></span></div>
     <div><b data-i="r2"></b><span data-i="d2"></span></div>
@@ -261,8 +278,8 @@ footer p+p{margin-top:.5rem;max-width:56em}
   </div>
 </div></section>
 
-<section class="contact pad" id="contact"><div class="wrap"><div class="cbox">
-  <h2 data-i="kh"></h2>
+<section class="contact pad" id="contact"><div class="wrap"><div class="cbox"><svg class="pod" viewBox="0 0 120 80" aria-hidden="true"><rect x="0" y="40" width="38" height="40" rx="3" fill="#fff" opacity=".16"/><rect x="41" y="14" width="38" height="66" rx="3" fill="#f4c300" opacity=".85"/><rect x="82" y="52" width="38" height="28" rx="3" fill="#fff" opacity=".16"/><g fill="#fff" font-size="15" font-weight="700" text-anchor="middle" font-family="sans-serif"><text x="19" y="64" opacity=".7">2</text><text x="60" y="44" fill="#06163a">1</text><text x="101" y="71" opacity=".7">3</text></g></svg>
+  <div class="five" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><h2 data-i="kh"></h2>
   <p data-i="kp"></p>
   <div class="r"><span class="mail" data-i="mail"></span><a class="pill" href="#top" data-i="up"></a></div>
 </div></div></section>
@@ -326,7 +343,7 @@ const T={
 en:{
  title:"İstanbul 2027 Health Directorate",bt1:"Health Directorate",bt2:"İstanbul 2027",
  n1:"Platform",n2:"Capabilities",n3:"Roadmap",n4:"Contact",
- h1:"Health care for İstanbul&nbsp;2027, <b>in one chain.</b>",sub:"Health Directorate · 4th European Games of the European Olympic Committees",explore:"Explore",prev:"Previous",next:"Next",carousel:"Sports and health capabilities",
+ h1:"Health care for İstanbul&nbsp;2027 European Games, <b>in one chain.</b>",sub:"Health Directorate · European Olympic Committees",explore:"Explore",prev:"Previous",next:"Next",carousel:"Sports and health capabilities",
  intro:"When an athlete is injured, a sample travels to the lab or a hotel gets a food complaint, institutions do the work. <em>The Health Directorate</em> owns the handover between them: who took over what, and when, on the record.",
  f1:"integrated modules",f2:"user roles",f3:"competition venues",f4:"hours of continuous operation",
  plh:"One screen from command centre to field.",pls:"Real-time incident management, anti-doping chain of custody and insurance files on one platform. The screens below are an interface draft running on sample data.",
@@ -342,7 +359,7 @@ en:{
 tr:{
  title:"İstanbul 2027 Sağlık Direktörlüğü",bt1:"Sağlık Direktörlüğü",bt2:"İstanbul 2027",
  n1:"Platform",n2:"Yetenekler",n3:"Yol haritası",n4:"İletişim",
- h1:"İstanbul 2027 için sağlık hizmeti, <b>tek zincirde.</b>",sub:"Sağlık Direktörlüğü · Avrupa Olimpiyat Komiteleri 4. Avrupa Oyunları",explore:"Keşfet",prev:"Önceki",next:"Sonraki",carousel:"Sporlar ve sağlık yetenekleri",
+ h1:"İstanbul&nbsp;2027 Avrupa Oyunları için sağlık hizmeti, <b>tek zincirde.</b>",sub:"Sağlık Direktörlüğü · Avrupa Olimpiyat Komiteleri",explore:"Keşfet",prev:"Önceki",next:"Sonraki",carousel:"Sporlar ve sağlık yetenekleri",
  intro:"Bir sporcu yaralandığında, bir numune laboratuvara giderken ya da bir otelde yemek şikâyeti geldiğinde işi kurumlar yapar. <em>Sağlık Direktörlüğü</em> ise aralarındaki devri sahiplenir: kim, ne zaman, neyi devraldı, kayıt altında.",
  f1:"entegre modül",f2:"kullanıcı rolü",f3:"müsabaka mekânı",f4:"saat kesintisiz işletim",
  plh:"Komuta merkezinden sahaya tek ekran.",pls:"Gerçek zamanlı olay yönetimi, doping zinciri ve sigorta dosyası aynı platformda. Aşağıdaki ekranlar örnek verilerle çalışan arayüz taslağıdır.",
@@ -360,6 +377,8 @@ try{const sv=localStorage.getItem("circle-lang");if(sv==="tr"||sv==="en")lang=sv
 try{const ql=new URLSearchParams(location.search).get("lang");if(ql==="tr"||ql==="en")lang=ql}catch(e){}
 const L=o=>o[lang];
 
+const WR='<path d="M16.00 27.20 L14.96 27.15 L13.93 27.01 L12.91 26.77 L11.93 26.43 L10.97 26.01 L10.06 25.50 L9.21 24.91 L8.41 24.24 L7.68 23.49 L7.02 22.69 L6.43 21.82 L5.93 20.91 L5.52 19.95 L5.20 18.96 L4.97 17.94 L4.84 16.91 L4.80 15.87 L4.86 14.83 L5.02 13.80 L5.27 12.79 L5.62 11.80 L6.05 10.86 L6.57 9.95 L7.17 9.10" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="10.59" cy="27.70" rx="3" ry="1.15" transform="rotate(158.0 10.59 27.70)" fill="currentColor"/><ellipse cx="5.13" cy="22.93" rx="3" ry="1.15" transform="rotate(-169.3 5.13 22.93)" fill="currentColor"/><ellipse cx="3.11" cy="15.97" rx="3" ry="1.15" transform="rotate(-136.7 3.11 15.97)" fill="currentColor"/><ellipse cx="5.16" cy="9.02" rx="3" ry="1.15" transform="rotate(-104.0 5.16 9.02)" fill="currentColor"/><path d="M16.00 27.20 L17.04 27.15 L18.07 27.01 L19.09 26.77 L20.07 26.43 L21.03 26.01 L21.94 25.50 L22.79 24.91 L23.59 24.24 L24.32 23.49 L24.98 22.69 L25.57 21.82 L26.07 20.91 L26.48 19.95 L26.80 18.96 L27.03 17.94 L27.16 16.91 L27.20 15.87 L27.14 14.83 L26.98 13.80 L26.73 12.79 L26.38 11.80 L25.95 10.86 L25.43 9.95 L24.83 9.10" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="21.41" cy="27.70" rx="3" ry="1.15" transform="rotate(22.0 21.41 27.70)" fill="currentColor"/><ellipse cx="26.87" cy="22.93" rx="3" ry="1.15" transform="rotate(-10.7 26.87 22.93)" fill="currentColor"/><ellipse cx="28.89" cy="15.97" rx="3" ry="1.15" transform="rotate(-43.3 28.89 15.97)" fill="currentColor"/><ellipse cx="26.84" cy="9.02" rx="3" ry="1.15" transform="rotate(-76.0 26.84 9.02)" fill="currentColor"/>';
+const TC=["#f4c300","#009f3d","#df0024","#4ea1ff","#ffffff"];
 const S=[
  {bg:"linear-gradient(120deg,#041433 0%,#0a3a9e 60%,#1b6bff 100%)",k:{en:"Sprint",tr:"Sprint"},t:{en:"The first minute on the field",tr:"Sahada ilk dakika"},d:{en:"The moment an incident opens, the nearest team, ambulance and hospital come together in one record.",tr:"Olay açıldığı anda en yakın ekip, ambulans ve hastane tek kayıtta bir araya gelir."},f:SPRINT,hr:172,sp:98,deco:"streak"},
  {bg:"linear-gradient(130deg,#031a3d 0%,#05508f 55%,#2aa3e8 100%)",k:{en:"Swimming",tr:"Yüzme"},t:{en:"From the pool to the lab",tr:"Havuzdan laboratuvara"},d:{en:"Every handover of a doping sample is signed by QR code, so no link in the chain breaks.",tr:"Doping numunesinin her teslimi karekodla imzalanır, zincirin hiçbir halkası kopmaz."},f:SWIM,hr:154,sp:97,deco:"wave"},
@@ -376,10 +395,10 @@ S.forEach((o,i)=>{
   if(o.deco==="wave"){deco+=`<svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 60 Q150 20 300 60 T600 60 T900 60 T1200 60 V120 H0Z" fill="#fff"/></svg>`}
   for(let j=0;j<7;j++){deco+=`<i class="plus" style="--s:${14+Math.random()*26}px;left:${Math.random()*96}%;top:${10+Math.random()*80}%;animation-duration:${7+Math.random()*7}s;animation-delay:${-Math.random()*8}s"></i>`}
   const heart='<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 28C6 20 3 14.5 3 10.5 3 7 5.7 4.5 9 4.5c2.8 0 5 1.6 7 4.2 2-2.600 4.200-4.200 7-4.200 3.300 0 6 2.500 6 6 0 4-3 9.500-13 17.500z"/></svg>';
-  e.innerHTML=`<div class="deco">${deco}</div><div class="fig">${o.f}</div><div class="vit">${heart}<div><b class="v1">${o.hr}</b><small>bpm</small></div><div><b>${o.sp}%</b><small>SpO₂</small></div><em></em></div><div class="cap"><small></small><h2></h2><p></p></div>`;
+  e.innerHTML=`<div class="deco">${deco}</div><div class="wreath"><svg viewBox="0 0 32 32" aria-hidden="true">${WR}</svg></div><div class="fig">${o.f}</div><div class="vit">${heart}<div><b class="v1">${o.hr}</b><small>bpm</small></div><div><b>${o.sp}%</b><small>SpO₂</small></div><em></em></div><div class="cap"><small></small><h2></h2><p></p></div>`;
   e.setAttribute("role","group");
   sl.appendChild(e);
-  const b=document.createElement("button");b.innerHTML="<i></i>";b.onclick=()=>go(i,true);tk.appendChild(b);
+  const b=document.createElement("button");b.innerHTML="<i></i>";b.style.setProperty("--tc",TC[i%5]);b.onclick=()=>go(i,true);tk.appendChild(b);
 });
 const slides=[...sl.children],ticks=[...tk.children],DUR=7000;
 let cur=-1,timer=0;
