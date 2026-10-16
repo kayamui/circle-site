@@ -207,6 +207,28 @@ footer p+p{margin-top:.5rem;max-width:56em}
 @media(max-width:700px){.pod{display:none}}
 .ecg{top:47%}
 @media(max-width:820px){.wreath{right:50%;translate:50% 0;height:56%;bottom:auto;top:30%}.ecg{top:40%}}
+
+/* photo slides + contribution tiles */
+.slide .ph{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.07);transition:opacity 1.2s,transform 9s ease-out}
+.slide .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,20,51,.9) 0%,rgba(7,42,115,.62) 52%,rgba(10,75,214,.28) 100%)}
+.slide.hasphoto .ph{opacity:1}.slide.hasphoto.on .ph{transform:scale(1)}
+.slide.hasphoto .fig,.slide.hasphoto .wreath{display:none}
+.slide.phs .vit{display:none}
+.bring{padding-block:clamp(3.5rem,8vw,6rem)}
+.bring h2{font-size:clamp(1.9rem,4vw,3rem);max-width:16em}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);margin-top:2.4rem;border-radius:20px;overflow:hidden}
+.tile{position:relative;overflow:hidden;min-height:26rem;color:#fff;text-decoration:none;display:flex;flex-direction:column;justify-content:flex-end;padding:1.6rem;background:var(--c)}
+.tile .tbg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s}
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,color-mix(in srgb,var(--c) 30%,transparent) 0%,var(--c) 88%)}
+.tile:hover .tbg{transform:scale(1.06)}
+.tile>*{position:relative;z-index:1}
+.tile .ticon{position:absolute;z-index:1;top:1.6rem;left:1.6rem;width:5.5rem;height:5.5rem;opacity:.95}
+.tile .ticon svg{width:100%;height:100%}
+.tile h3{font-size:1.7rem;font-weight:300;line-height:1.1}
+.tile h3 b{font-weight:700}
+.tile p{margin-top:.7rem;font-size:.98rem;color:#ffffffe0;max-width:20em}
+@media(max-width:980px){.tiles{grid-template-columns:repeat(2,1fr)}.tile{min-height:21rem}}
+@media(max-width:560px){.tiles{grid-template-columns:1fr}.tile{min-height:17rem}}
 .bt{display:flex;flex-direction:column;line-height:1.1;font-size:1.05rem}
 .bt small{font-size:.66rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#ffffffb0;margin-top:.2rem}
 .lang{display:flex;border:1px solid #ffffff55;border-radius:999px;padding:2px}
@@ -247,6 +269,8 @@ footer p+p{margin-top:.5rem;max-width:56em}
     <div style="--oc:#df0024"><strong data-n="24">0</strong><span data-i="f4"></span></div>
   </div>
 </div></section>
+
+<section class="bring pad" id="bring"><div class="wrap"><div class="five" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><h2 data-i="bh"></h2><div class="tiles" id="tiles"></div></div></section>
 
 <section class="plat pad" id="platform"><div class="wrap">
   <div class="five" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><h2 data-i="plh"></h2>
@@ -349,7 +373,7 @@ en:{
  plh:"One screen from command centre to field.",pls:"Real-time incident management, anti-doping chain of custody and insurance files on one platform. The screens below are an interface draft running on sample data.",
  tb1:"Command",tb2:"Anti-doping chain",tb3:"Insurance file",
  sd1:"Overview",sd2:"Incidents",sd3:"Hospitals",sd4:"Ambulances",sd5:"Reports",
- ch:"Everything health-related, in one chain.",
+ ch:"Everything health-related, in one chain.",bh:"What the Health Directorate brings to the Games.",
  rh:"Planned to be ready for the Games.",
  r1:"Discovery",d1:"Oct – Nov 2026",r2:"Foundations",d2:"Nov – Dec 2026",r3:"Core and demo",d3:"Jan – Feb 2027",r4:"Exercises",d4:"Mar – Jun 2027",r5:"The Games",
  kh:"Get in touch.",kp:"For partner institutions, venues and delegations: write to the Health Directorate for a walkthrough of the platform.",mail:"health@YOURDOMAIN",up:"Back to top",
@@ -365,7 +389,7 @@ tr:{
  plh:"Komuta merkezinden sahaya tek ekran.",pls:"Gerçek zamanlı olay yönetimi, doping zinciri ve sigorta dosyası aynı platformda. Aşağıdaki ekranlar örnek verilerle çalışan arayüz taslağıdır.",
  tb1:"Komuta",tb2:"Doping zinciri",tb3:"Sigorta dosyası",
  sd1:"Genel bakış",sd2:"Olaylar",sd3:"Hastaneler",sd4:"Ambulanslar",sd5:"Raporlar",
- ch:"Sağlıkla ilgili ne varsa, tek zincirde.",
+ ch:"Sağlıkla ilgili ne varsa, tek zincirde.",bh:"Sağlık Direktörlüğü'nün Oyunlara katkısı.",
  rh:"Oyunlara hazır olacak şekilde planlandı.",
  r1:"Keşif",d1:"Ekim – Kasım 2026",r2:"Temel",d2:"Kasım – Aralık 2026",r3:"Çekirdek ve demo",d3:"Ocak – Şubat 2027",r4:"Tatbikat",d4:"Mart – Haziran 2027",r5:"Oyunlar",
  kh:"İletişime geçin.",kp:"Paydaş kurumlar, mekânlar ve heyetler için: platformun tanıtımı için Sağlık Direktörlüğü'ne yazın.",mail:"saglik@ALANADI",up:"Başa dön",
@@ -379,13 +403,24 @@ const L=o=>o[lang];
 
 const WR='<path d="M16.00 27.20 L14.96 27.15 L13.93 27.01 L12.91 26.77 L11.93 26.43 L10.97 26.01 L10.06 25.50 L9.21 24.91 L8.41 24.24 L7.68 23.49 L7.02 22.69 L6.43 21.82 L5.93 20.91 L5.52 19.95 L5.20 18.96 L4.97 17.94 L4.84 16.91 L4.80 15.87 L4.86 14.83 L5.02 13.80 L5.27 12.79 L5.62 11.80 L6.05 10.86 L6.57 9.95 L7.17 9.10" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="10.59" cy="27.70" rx="3" ry="1.15" transform="rotate(158.0 10.59 27.70)" fill="currentColor"/><ellipse cx="5.13" cy="22.93" rx="3" ry="1.15" transform="rotate(-169.3 5.13 22.93)" fill="currentColor"/><ellipse cx="3.11" cy="15.97" rx="3" ry="1.15" transform="rotate(-136.7 3.11 15.97)" fill="currentColor"/><ellipse cx="5.16" cy="9.02" rx="3" ry="1.15" transform="rotate(-104.0 5.16 9.02)" fill="currentColor"/><path d="M16.00 27.20 L17.04 27.15 L18.07 27.01 L19.09 26.77 L20.07 26.43 L21.03 26.01 L21.94 25.50 L22.79 24.91 L23.59 24.24 L24.32 23.49 L24.98 22.69 L25.57 21.82 L26.07 20.91 L26.48 19.95 L26.80 18.96 L27.03 17.94 L27.16 16.91 L27.20 15.87 L27.14 14.83 L26.98 13.80 L26.73 12.79 L26.38 11.80 L25.95 10.86 L25.43 9.95 L24.83 9.10" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><ellipse cx="21.41" cy="27.70" rx="3" ry="1.15" transform="rotate(22.0 21.41 27.70)" fill="currentColor"/><ellipse cx="26.87" cy="22.93" rx="3" ry="1.15" transform="rotate(-10.7 26.87 22.93)" fill="currentColor"/><ellipse cx="28.89" cy="15.97" rx="3" ry="1.15" transform="rotate(-43.3 28.89 15.97)" fill="currentColor"/><ellipse cx="26.84" cy="9.02" rx="3" ry="1.15" transform="rotate(-76.0 26.84 9.02)" fill="currentColor"/>';
 const TC=["#f4c300","#009f3d","#df0024","#4ea1ff","#ffffff"];
-const S=[
+const ICO=b=>`<svg viewBox="0 0 400 400" aria-hidden="true">${b}</svg>`;
+const I_AMB=ICO('<path fill="#fff" d="M30 300V160Q30 148 44 148H236V204H296L368 262V300Z"/><circle cx="108" cy="306" r="38" fill="#fff"/><circle cx="108" cy="306" r="16" fill="#0a3a9e"/><circle cx="292" cy="306" r="38" fill="#fff"/><circle cx="292" cy="306" r="16" fill="#0a3a9e"/><path fill="#0a3a9e" d="M252 218H290L338 260H252Z"/><rect x="118" y="184" width="26" height="70" rx="4" fill="#df0024"/><rect x="96" y="206" width="70" height="26" rx="4" fill="#df0024"/><rect x="110" y="122" width="70" height="18" rx="9" fill="#4ea1ff"/>');
+const I_HEL=ICO('<ellipse cx="170" cy="240" rx="104" ry="58" fill="#fff"/><path fill="#fff" d="M250 228H382V250H258Z"/><circle cx="382" cy="238" r="22" fill="none" stroke="#fff" stroke-width="9"/><rect x="60" y="130" width="250" height="12" rx="6" fill="#fff"/><rect x="160" y="136" width="14" height="48" fill="#fff"/><path fill="#0a3a9e" d="M200 205Q250 205 268 242H196Z"/><rect x="108" y="222" width="18" height="46" rx="3" fill="#df0024"/><rect x="94" y="236" width="46" height="18" rx="3" fill="#df0024"/><path d="M90 322H290M120 296V322M250 292V322" stroke="#fff" stroke-width="11" stroke-linecap="round"/>');
+const I_DOC=ICO('<circle cx="200" cy="108" r="46" fill="#fff"/><path fill="#fff" d="M92 360Q92 190 200 190Q308 190 308 360Z"/><path d="M160 196Q140 276 200 290Q260 276 240 196" fill="none" stroke="#4ea1ff" stroke-width="11" stroke-linecap="round"/><circle cx="200" cy="294" r="15" fill="#4ea1ff"/><rect x="262" y="250" width="14" height="46" rx="3" fill="#df0024"/><rect x="246" y="266" width="46" height="14" rx="3" fill="#df0024"/>');
+const I_SUP=ICO('<rect x="70" y="170" width="260" height="170" rx="16" fill="#fff"/><rect x="58" y="138" width="284" height="50" rx="12" fill="#dbe9ff"/><rect x="186" y="206" width="28" height="92" rx="4" fill="#df0024"/><rect x="154" y="238" width="92" height="28" rx="4" fill="#df0024"/><path d="M150 138V108Q150 90 168 90H232Q250 90 250 108V138" fill="none" stroke="#fff" stroke-width="11"/>');
+const PHOTO=[
+ {ph:"img/ambulance.jpg",bg:"linear-gradient(120deg,#041433 0%,#0a3a9e 60%,#1b6bff 100%)",k:{en:"Ambulances",tr:"Ambulans"},t:{en:"Every venue within reach",tr:"Her mekân erişim mesafesinde"},d:{en:"Our ambulance fleet stands by at venues and along routes, dispatched from the same live record.",tr:"Ambulans filomuz mekânlarda ve güzergâhlarda hazır bekler, aynı canlı kayıttan yönlendirilir."},f:I_AMB,deco:"streak",tc:"#df0024",tt:{en:"<b>Ambulances</b>",tr:"<b>Ambulans</b> filosu"},td:{en:"On standby at venues and along every route.",tr:"Mekânlarda ve her güzergâhta hazır."}},
+ {ph:"img/helicopter.jpg",bg:"linear-gradient(130deg,#031a3d 0%,#05508f 55%,#2aa3e8 100%)",k:{en:"Air ambulance",tr:"Hava ambulansı"},t:{en:"When minutes matter",tr:"Dakikaların önemli olduğu an"},d:{en:"Ambulance helicopters cover the longest transfers, with landing and handover recorded step by step.",tr:"Ambulans helikopterler en uzun nakilleri üstlenir; iniş ve devir adım adım kaydedilir."},f:I_HEL,deco:"wave",tc:"#0085c7",tt:{en:"<b>Air</b> ambulance",tr:"<b>Hava</b> ambulansı"},td:{en:"Helicopters for the longest and most urgent transfers.",tr:"En uzun ve en acil nakiller için helikopterler."}},
+ {ph:"img/doctors.jpg",bg:"linear-gradient(120deg,#06163a 0%,#103a8a 55%,#3d7bff 100%)",k:{en:"Doctors and teams",tr:"Doktorlar ve ekipler"},t:{en:"People at every post",tr:"Her görev noktasında insan"},d:{en:"Doctors, paramedics and nurses are assigned by venue and shift, with a clear owner for every handover.",tr:"Doktor, paramedik ve hemşireler mekân ve vardiyaya göre atanır; her devrin net bir sahibi vardır."},f:I_DOC,deco:"ring",tc:"#009f3d",tt:{en:"<b>Doctors</b> and teams",tr:"<b>Doktorlar</b> ve ekipler"},td:{en:"Assigned by venue and shift, always with an owner.",tr:"Mekân ve vardiyaya göre atanır, her zaman bir sahibi var."}},
+ {ph:"img/supplies.jpg",bg:"linear-gradient(120deg,#041433 0%,#0b2f86 55%,#2d5be0 100%)",k:{en:"Healthcare supplies",tr:"Sağlık malzemeleri"},t:{en:"Stocked before it is needed",tr:"İhtiyaçtan önce hazır"},d:{en:"Medicines and equipment are tracked from storage to the field, with temperature and expiry alerts.",tr:"İlaç ve ekipman depodan sahaya izlenir; sıcaklık ve son kullanma uyarıları verilir."},f:I_SUP,deco:"streak",tc:"#c99a00",tt:{en:"Healthcare <b>supplies</b>",tr:"Sağlık <b>malzemeleri</b>"},td:{en:"Medicines and equipment, tracked to the field.",tr:"İlaç ve ekipman, sahaya kadar izlenir."}}
+];
+const S=PHOTO.concat([
  {bg:"linear-gradient(120deg,#041433 0%,#0a3a9e 60%,#1b6bff 100%)",k:{en:"Sprint",tr:"Sprint"},t:{en:"The first minute on the field",tr:"Sahada ilk dakika"},d:{en:"The moment an incident opens, the nearest team, ambulance and hospital come together in one record.",tr:"Olay açıldığı anda en yakın ekip, ambulans ve hastane tek kayıtta bir araya gelir."},f:SPRINT,hr:172,sp:98,deco:"streak"},
  {bg:"linear-gradient(130deg,#031a3d 0%,#05508f 55%,#2aa3e8 100%)",k:{en:"Swimming",tr:"Yüzme"},t:{en:"From the pool to the lab",tr:"Havuzdan laboratuvara"},d:{en:"Every handover of a doping sample is signed by QR code, so no link in the chain breaks.",tr:"Doping numunesinin her teslimi karekodla imzalanır, zincirin hiçbir halkası kopmaz."},f:SWIM,hr:154,sp:97,deco:"wave"},
  {bg:"linear-gradient(120deg,#06163a 0%,#103a8a 55%,#3d7bff 100%)",k:{en:"Cycling",tr:"Bisiklet"},t:{en:"Every athlete on the course",tr:"Parkurdaki her sporcu"},d:{en:"Location, hospital capacity and traffic are tracked together, so nobody drops out of sight along the route.",tr:"Konum, hastane kapasitesi ve trafik birlikte izlenir; yol boyunca kimse görünmez kalmaz."},f:BIKE,hr:148,sp:98,deco:"streak"},
  {bg:"linear-gradient(120deg,#041433 0%,#0b2f86 55%,#2d5be0 100%)",k:{en:"Archery",tr:"Okçuluk"},t:{en:"Straight to the target",tr:"Hedefe tam isabet"},d:{en:"Every task is assigned to a single owner. No handover is left without one.",tr:"Her görev tek bir sahibe atanır. Sahipsiz devir kalmaz."},f:ARCH,hr:78,sp:99,deco:"ring"},
  {bg:"linear-gradient(120deg,#031230 0%,#0a2a73 50%,#0a6ad6 100%)",k:{en:"Hurdles",tr:"Engelli koşu"},t:{en:"Handovers without hurdles",tr:"Engelsiz devir"},d:{en:"The insurance file builds itself as the case progresses. No chasing paperwork.",tr:"Sigorta dosyası vaka ilerledikçe kendiliğinden hazırlanır; evrak peşinde koşulmaz."},f:HURD,hr:181,sp:97,deco:"streak"}
-];
+]);
 const sl=$("#slides"),tk=$("#tick");
 S.forEach((o,i)=>{
   const e=document.createElement("div");e.className="slide";e.style.setProperty("--bg",o.bg);
@@ -397,6 +432,7 @@ S.forEach((o,i)=>{
   const heart='<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 28C6 20 3 14.5 3 10.5 3 7 5.7 4.5 9 4.5c2.8 0 5 1.6 7 4.2 2-2.600 4.200-4.200 7-4.200 3.300 0 6 2.500 6 6 0 4-3 9.500-13 17.500z"/></svg>';
   e.innerHTML=`<div class="deco">${deco}</div><div class="wreath"><svg viewBox="0 0 32 32" aria-hidden="true">${WR}</svg></div><div class="fig">${o.f}</div><div class="vit">${heart}<div><b class="v1">${o.hr}</b><small>bpm</small></div><div><b>${o.sp}%</b><small>SpO₂</small></div><em></em></div><div class="cap"><small></small><h2></h2><p></p></div>`;
   e.setAttribute("role","group");
+  if(o.ph){e.classList.add("phs");e.insertAdjacentHTML("afterbegin","<div class=\"ph\" style=\"background-image:url("+o.ph+")\"></div>");const im=new Image();im.onload=()=>e.classList.add("hasphoto");im.src=o.ph}
   sl.appendChild(e);
   const b=document.createElement("button");b.innerHTML="<i></i>";b.style.setProperty("--tc",TC[i%5]);b.onclick=()=>go(i,true);tk.appendChild(b);
 });
@@ -490,6 +526,7 @@ function apply(){
   S.forEach((o,i)=>{const c=slides[i];c.querySelector(".cap small").textContent=L(o.k);c.querySelector(".cap h2").textContent=L(o.t);c.querySelector(".cap p").textContent=L(o.d);
     c.setAttribute("aria-label",(i+1)+" / "+S.length+": "+L(o.t));ticks[i].setAttribute("aria-label",L(o.k)+": "+L(o.t))});
   $("#list").innerHTML=CAP.map(c=>`<div>${ic(c[2])}<h3>${L(c[0])}</h3><p>${L(c[1])}</p></div>`).join("");
+  $("#tiles").innerHTML=PHOTO.map(o=>`<a class="tile" href="#platform" style="--c:${o.tc}"><div class="tbg" style="background-image:url(${o.ph})"></div><div class="ticon">${o.f}</div><h3>${L(o.tt)}</h3><p>${L(o.td)}</p></a>`).join("");
   pane(curPane);
   document.querySelectorAll(".vit em").forEach(e=>e.textContent=lang==="tr"?"canlı":"live");
 }
