@@ -61,6 +61,7 @@ nav a{color:#ffffffcc;text-decoration:none}nav a:hover{color:#fff}
 
 .lead{position:absolute;left:clamp(20px,5vw,72px);top:clamp(6.2rem,17vh,9rem);z-index:6;max-width:46rem;pointer-events:none}
 .lead h1{font-size:clamp(2.1rem,5.2vw,4.6rem);font-weight:300;color:#fff}
+.lead .sub2{margin-top:1.1rem;font-size:1.15rem;color:#ffffffcc;font-weight:500}
 .lead h1 b{font-weight:600}
 .ctrl{position:absolute;z-index:7;left:clamp(20px,5vw,72px);right:clamp(20px,5vw,72px);bottom:clamp(20px,4.5vh,40px);display:flex;align-items:center;gap:1.2rem}
 .tick{flex:1;display:flex;gap:.6rem}
@@ -209,7 +210,7 @@ footer p+p{margin-top:.5rem;max-width:56em}
 <section class="hero" id="top" aria-roledescription="carousel">
   <div id="slides"></div>
   <div class="ecg" aria-hidden="true"><svg viewBox="0 0 1200 140" preserveAspectRatio="none"><path class="base" pathLength="1" d="M0 70H170l14 -9 14 9H300l12 8 14 -58 16 84 12 -34H440l18 -14 22 14H640l12 8 14 -58 16 84 12 -34H780l18 -14 22 14H1000l12 8 14 -58 16 84 12 -34H1200"/><path class="pulse" pathLength="1" d="M0 70H170l14 -9 14 9H300l12 8 14 -58 16 84 12 -34H440l18 -14 22 14H640l12 8 14 -58 16 84 12 -34H780l18 -14 22 14H1000l12 8 14 -58 16 84 12 -34H1200"/></svg></div>
-  <div class="lead"><h1 data-i="h1"></h1></div>
+  <div class="lead"><h1 data-i="h1"></h1><p class="sub2" data-i="sub"></p></div>
   <div class="ctrl">
     <div class="tick" id="tick"></div>
     <div class="arrows"><button id="pv" data-a="prev">‹</button><button id="nx" data-a="next">›</button></div>
@@ -323,7 +324,7 @@ const T={
 en:{
  title:"Circle Event Health",
  n1:"Platform",n2:"Capabilities",n3:"Roadmap",n4:"Contact",
- h1:"The digital backbone of health <b>for major games.</b>",explore:"Explore",prev:"Previous",next:"Next",carousel:"Sports and health capabilities",
+ h1:"The digital backbone of health for <b>İstanbul 2027.</b>",sub:"Built for the 4th European Games",explore:"Explore",prev:"Previous",next:"Next",carousel:"Sports and health capabilities",
  intro:"When an athlete is injured, a sample travels to the lab or a hotel gets a food complaint, institutions do the work. <em>Circle</em> owns the handover between them: who took over what, and when, on the record.",
  f1:"integrated modules",f2:"user roles",f3:"competition venues",f4:"hours of continuous operation",
  plh:"One screen from command centre to field.",pls:"Real-time incident management, anti-doping chain of custody and insurance files on one platform. The screens below are an interface draft running on sample data.",
@@ -339,7 +340,7 @@ en:{
 tr:{
  title:"Circle Oyun Sağlığı",
  n1:"Platform",n2:"Yetenekler",n3:"Yol haritası",n4:"İletişim",
- h1:"Büyük oyunlar için <b>sağlığın dijital altyapısı.</b>",explore:"Keşfet",prev:"Önceki",next:"Sonraki",carousel:"Sporlar ve sağlık yetenekleri",
+ h1:"İstanbul 2027 için <b>sağlığın dijital altyapısı.</b>",sub:"4. Avrupa Oyunları için geliştiriliyor",explore:"Keşfet",prev:"Önceki",next:"Sonraki",carousel:"Sporlar ve sağlık yetenekleri",
  intro:"Bir sporcu yaralandığında, bir numune laboratuvara giderken ya da bir otelde yemek şikâyeti geldiğinde işi kurumlar yapar. <em>Circle</em> ise aralarındaki devri sahiplenir: kim, ne zaman, neyi devraldı, kayıt altında.",
  f1:"entegre modül",f2:"kullanıcı rolü",f3:"müsabaka mekânı",f4:"saat kesintisiz işletim",
  plh:"Komuta merkezinden sahaya tek ekran.",pls:"Gerçek zamanlı olay yönetimi, doping zinciri ve sigorta dosyası aynı platformda. Aşağıdaki ekranlar örnek verilerle çalışan arayüz taslağıdır.",
